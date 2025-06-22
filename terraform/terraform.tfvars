@@ -1,0 +1,7 @@
+project_id = "fuzzy-matcher"
+region     = "central-east1"
+zone       = "central-east1-a"
+email      = "robertovictor.rj1@gmail.com"
+env        = "env"
+solution   = "fuzzy-matcher"
+service_account = ""
