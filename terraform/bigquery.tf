@@ -31,3 +31,24 @@ resource "google_bigquery_dataset" "aux" {
     user_by_email = google_service_account.bqowner.email
   }
 }
+
+resource "google_bigquery_table" "blacklist_table" {
+  dataset_id = google_bigquery_dataset.aux.dataset_id
+  table_id   = "blacklist"
+
+  labels = {
+    env = "dev"
+  }
+
+  schema = <<EOF
+[
+  {
+    "name": "term",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Term to be blacklisted on main pipeline tokens."
+  }
+]
+EOF
+
+}
