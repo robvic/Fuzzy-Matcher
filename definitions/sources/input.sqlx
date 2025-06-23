@@ -1,0 +1,9 @@
+config {
+  type: "[tipo config (table, view, declaration)]",
+  database: dataform.projectConfig.defaultDatabase,
+  schema: dataform.projectConfig.schemaSuffix,
+  name: "TABLE_NAME",
+}
+
+SELECT *
+FROM `TALBE_ADDRESS`

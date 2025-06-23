@@ -1,0 +1,7 @@
+{
+    "defaultSchema": "DATASET_NAME",
+    "assertionSchema": "dataform_assertions",
+    "warehouse": "bigquery",
+    "defaultDatabase": "PROJECT_NAME",
+    "defaultLocation": "US"
+}  
