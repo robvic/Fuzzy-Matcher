@@ -1,0 +1,5 @@
+# Dados de conteúdo/amostras
+data/
+
+# Variáveis sensíveis no Terraform
+terraform/*.tfvars

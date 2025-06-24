@@ -41,3 +41,18 @@ variable "solution" {
   description = "Solution's Title"
   type        = string
 }
+
+variable "git-repository" {
+  description = "Git URL"
+  type        = string
+}
+
+variable "branch" {
+  description = "Defult branch for Dataform"
+  type        = string
+}
+
+variable "git_token" {
+  description = "Token to access the git repository"
+  type        = string
+}

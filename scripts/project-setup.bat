@@ -1,1 +1,1 @@
-gcloud projects create fuzzy-matcher
+gcloud projects create fuzzy-matcher-%RANDOM% --name="Fuzzy Matcher"

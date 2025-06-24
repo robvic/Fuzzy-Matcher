@@ -1,20 +1,27 @@
  resource "google_dataform_repository" "dataform_repository" {
-   project = var.projeto-pipeline
+   project = var.project_id
    provider = google-beta
-   name = "${var.solucao}${local.sufixo}"
-   region = var.regiao
+   name = "dataform-${var.solution}"
+   region = var.region
    timeouts {}
 
    git_remote_settings {
        url = var.git-repository
        default_branch = var.branch
-       authentication_token_secret_version = "projects/${var.projeto-pipeline}/secrets/${var.solucao}/versions/latest"
+       authentication_token_secret_version = "projects/${var.project_id}/secrets/${var.solution}/versions/latest"
    }
 
    workspace_compilation_overrides {
      schema_suffix = var.branch
-     default_database = var.projeto-pipeline
+     default_database = var.project_id
    }
+
+   depends_on = [
+    google_secret_manager_secret.dataform_git_token,
+    google_secret_manager_secret_version.dataform_git_token_version,
+    google_secret_manager_secret_iam_member.dataform_access,
+    google_service_account.dataform_sa
+  ]
  }
 
 resource "google_dataform_repository_release_config" "release" {
@@ -24,16 +31,16 @@ resource "google_dataform_repository_release_config" "release" {
   region     = google_dataform_repository.repository.region
   repository = google_dataform_repository.repository.name
 
-  name          = "my_release"
+  name          = "main_release"
   git_commitish = "main"
   cron_schedule = "0 7 * * *"
-  time_zone     = "America/New_York"
+  time_zone     = "Brazil/Sao_Paulo"
 
   code_compilation_config {
-    default_database = "gcp-example-project"
-    default_schema   = "example-dataset"
-    default_location = "us-central1"
-    assertion_schema = "example-assertion-dataset"
+    default_database = var.project_id
+    default_schema   = "main"
+    default_location = var.region
+    assertion_schema = "dataform_assertions"
     database_suffix  = ""
     schema_suffix    = ""
     table_prefix     = ""
@@ -41,6 +48,9 @@ resource "google_dataform_repository_release_config" "release" {
       var1 = "value"
     }
   }
+
+  depends_on = [ google_bigquery_dataset.main,
+                google_bigquery_dataset.dataform_assertions ]
 }
 
 resource "google_dataform_repository_workflow_config" "workflow" {
@@ -54,14 +64,9 @@ resource "google_dataform_repository_workflow_config" "workflow" {
 
   invocation_config {
     included_targets {
-      database = "gcp-example-project"
-      schema   = "example-dataset"
+      database = var.project_id
+      schema   = "main"
       name     = "target_1"
-    }
-    included_targets {
-      database = "gcp-example-project"
-      schema   = "example-dataset"
-      name     = "target_2"
     }
     included_tags                            = ["tag_1"]
     transitive_dependencies_included         = true
@@ -71,5 +76,10 @@ resource "google_dataform_repository_workflow_config" "workflow" {
   }
 
   cron_schedule   = "0 7 * * *"
-  time_zone       = "America/New_York"
+  time_zone       = "Brazil/Sao_Paulo"
+
+  depends_on = [ google_bigquery_dataset.main,
+                google_bigquery_dataset.dataform_assertions,
+                google_dataform_repository.repository,
+                google_dataform_repository_release_config.release_config ]
 }

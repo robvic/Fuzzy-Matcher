@@ -1,7 +1,7 @@
 {
-    "defaultSchema": "DATASET_NAME",
+    "defaultSchema": "main",
     "assertionSchema": "dataform_assertions",
     "warehouse": "bigquery",
-    "defaultDatabase": "PROJECT_NAME",
+    "defaultDatabase": "fuzzy-matcher-280",
     "defaultLocation": "US"
 }  

@@ -32,6 +32,12 @@ resource "google_bigquery_dataset" "aux" {
   }
 }
 
+resource "google_bigquery_dataset" "dataform_assertions" {
+  dataset_id = "dataform_assertions"
+  project    = var.project_id
+  location   = var.region
+}
+
 resource "google_bigquery_table" "blacklist_table" {
   dataset_id = google_bigquery_dataset.aux.dataset_id
   table_id   = "blacklist"
