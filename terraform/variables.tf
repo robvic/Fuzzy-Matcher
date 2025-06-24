@@ -11,6 +11,13 @@ variable "project_id" {
   type        = string
 }
 
+variable "location" {
+  description = "The location for the resources"
+  type        = string
+  default     = "US"
+  
+}
+
 variable "region" {
   description = "The region to operate under"
   type        = string
@@ -26,12 +33,6 @@ variable "email" {
   description = "Developer's e-mail"
   type        = string
 }
-
-variable "service_account" {
-  description = "SA"
-  type        = string
-}
-
 variable "env" {
   description = "Environment"
   type        = string

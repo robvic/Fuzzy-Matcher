@@ -36,6 +36,11 @@ resource "google_bigquery_dataset" "dataform_assertions" {
   dataset_id = "dataform_assertions"
   project    = var.project_id
   location   = var.region
+
+  access {
+    role          = "OWNER"
+    user_by_email = google_service_account.bqowner.email
+  }
 }
 
 resource "google_bigquery_table" "blacklist_table" {
@@ -45,6 +50,8 @@ resource "google_bigquery_table" "blacklist_table" {
   labels = {
     env = "dev"
   }
+
+  deletion_protection = false
 
   schema = <<EOF
 [
@@ -56,5 +63,7 @@ resource "google_bigquery_table" "blacklist_table" {
   }
 ]
 EOF
+
+depends_on = [google_bigquery_dataset.aux]
 
 }

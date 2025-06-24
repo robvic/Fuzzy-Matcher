@@ -1,14 +1,14 @@
-resource "google_secret_manager_secret" "secret" {
+resource "google_secret_manager_secret" "dataform_git_token" {
   provider  = google-beta
+  project   = var.project_id
   secret_id = "my_secret"
   replication {
     auto {}
   }
 }
 
-resource "google_secret_manager_secret_version" "secret_version" {
+resource "google_secret_manager_secret_version" "dataform_git_token_version" {
     provider = google-beta
-    secret   = google_secret_manager_secret.secret.id
-
+    secret   = google_secret_manager_secret.dataform_git_token.id
     secret_data = var.git_token
 }

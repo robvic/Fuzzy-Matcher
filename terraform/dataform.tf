@@ -24,17 +24,17 @@
   ]
  }
 
-resource "google_dataform_repository_release_config" "release" {
+resource "google_dataform_repository_release_config" "release_config" {
   provider = google-beta
 
-  project    = google_dataform_repository.repository.project
-  region     = google_dataform_repository.repository.region
-  repository = google_dataform_repository.repository.name
+  project    = var.project_id
+  region     = var.region
+  repository = google_dataform_repository.dataform_repository.name
 
   name          = "main_release"
   git_commitish = "main"
   cron_schedule = "0 7 * * *"
-  time_zone     = "Brazil/Sao_Paulo"
+  time_zone     = "America/Sao_Paulo"
 
   code_compilation_config {
     default_database = var.project_id
@@ -56,9 +56,9 @@ resource "google_dataform_repository_release_config" "release" {
 resource "google_dataform_repository_workflow_config" "workflow" {
   provider = google-beta
 
-  project        = google_dataform_repository.repository.project
-  region         = google_dataform_repository.repository.region
-  repository     = google_dataform_repository.repository.name
+  project        = var.project_id
+  region         = var.region
+  repository     = google_dataform_repository.dataform_repository.name
   name           = "my_workflow"
   release_config = google_dataform_repository_release_config.release_config.id
 
@@ -76,10 +76,8 @@ resource "google_dataform_repository_workflow_config" "workflow" {
   }
 
   cron_schedule   = "0 7 * * *"
-  time_zone       = "Brazil/Sao_Paulo"
+  time_zone       = "America/Sao_Paulo"
 
   depends_on = [ google_bigquery_dataset.main,
-                google_bigquery_dataset.dataform_assertions,
-                google_dataform_repository.repository,
-                google_dataform_repository_release_config.release_config ]
+                google_bigquery_dataset.dataform_assertions ]
 }

@@ -3,3 +3,9 @@ data/
 
 # Variáveis sensíveis no Terraform
 terraform/*.tfvars
+
+# States do Terraform
+terraform/*.tfstate
+terraform/*.tfstate.backup
+terraform/.terraform/
+terraform/.terraform.lock.hcl
