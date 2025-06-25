@@ -2,11 +2,12 @@ config {
   type: "operation",
   database: dataform.projectConfig.defaultDatabase,
   schema: dataform.projectConfig.schemaSuffix,
-  name: "blacklist",
+  name: "load",
 }
 
-LOAD DATA OVERWRITE aux.blacklist
+LOAD DATA OVERWRITE main.load
 FROM FILES(
   format = 'JSON',
-  uris = ['gs://data-fuzzy-matcher-280/blacklist.json']
+  uris = ['gs://data-fuzzy-matcher-280/amostra_clientes.json'],
+  ignore_unknown_values = true
 )

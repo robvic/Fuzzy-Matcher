@@ -1,9 +1,9 @@
 config {
-  type: "[tipo config (table, view, declaration)]",
+  type: "table",
   database: dataform.projectConfig.defaultDatabase,
   schema: dataform.projectConfig.schemaSuffix,
-  name: "TABLE_NAME",
+  name: "input",
 }
 
-SELECT *
-FROM `TALBE_ADDRESS`
+SELECT DISTINCT cliente, origem
+FROM main.load
