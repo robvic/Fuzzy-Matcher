@@ -1,0 +1,6 @@
+{
+  "name": "fuzzy-matcher",
+  "dependencies": {
+    "@dataform/core": "2.4.2"
+  }
+}
