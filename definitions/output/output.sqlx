@@ -2,10 +2,9 @@ config {
   type: "table",
   database: dataform.projectConfig.defaultDatabase,
   schema: dataform.projectConfig.defaultSchema,
-  name: "TABLE_NAME",
-  hasOutput: true,
+  name: "output",
 }
 
 INSERT INTO `TABLE_ADDRESS`
 SELECT *
-FROM ${ref('REF_TABLE')}
+FROM ${ref('input')}
