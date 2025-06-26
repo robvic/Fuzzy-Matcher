@@ -11,6 +11,11 @@ variable "project_id" {
   type        = string
 }
 
+variable "project_number" {
+  description = "The Project number used to identify resources"
+  type        = string
+}
+
 variable "location" {
   description = "The location for the resources"
   type        = string

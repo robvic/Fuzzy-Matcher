@@ -1,7 +1,7 @@
 resource "google_secret_manager_secret" "dataform_git_token" {
   provider  = google-beta
   project   = var.project_id
-  secret_id = "my_secret"
+  secret_id = "git_secret_token"
   replication {
     auto {}
   }

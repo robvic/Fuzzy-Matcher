@@ -20,8 +20,36 @@ resource "google_project_iam_member" "bqowner_bigquery_dataeditor" {
   member  = "serviceAccount:${google_service_account.bqowner.email}"
 }
 
+resource "google_project_iam_member" "dataform_bigquery_user" {
+  project = var.project_id
+  role    = "roles/bigquery.jobUser"
+  member  = "serviceAccount:${google_service_account.dataform_sa.email}"
+}
+
+
+
+resource "google_project_iam_member" "dataform_token_creator" {
+  project = var.project_id
+  role    = "roles/iam.serviceAccountTokenCreator"
+  member  = "serviceAccount:${google_service_account.dataform_sa.email}"
+}
+
+resource "google_project_iam_member" "dataform_default_token_creator" {
+  project = var.project_id
+  role    = "roles/iam.serviceAccountTokenCreator"
+  member  = "serviceAccount:service-${var.project_number}@gcp-sa-dataform.iam.gserviceaccount.com"
+}
+
 resource "google_secret_manager_secret_iam_member" "dataform_access" {
+  project = var.project_id
   secret_id = google_secret_manager_secret.dataform_git_token.id
   role      = "roles/secretmanager.secretAccessor"
   member    = "serviceAccount:${google_service_account.dataform_sa.email}"
+}
+
+resource "google_secret_manager_secret_iam_member" "dataform_default_sa_access" {
+  project = var.project_id
+  secret_id = google_secret_manager_secret.dataform_git_token.id
+  role      = "roles/secretmanager.secretAccessor"
+  member    = "serviceAccount:service-${var.project_number}@gcp-sa-dataform.iam.gserviceaccount.com"
 }

@@ -3,12 +3,13 @@
    provider = google-beta
    name = "dataform-${var.solution}"
    region = var.region
+   service_account = google_service_account.dataform_sa.email
    timeouts {}
 
    git_remote_settings {
        url = var.git-repository
        default_branch = var.branch
-       authentication_token_secret_version = "projects/${var.project_id}/secrets/${var.solution}/versions/latest"
+       authentication_token_secret_version = "projects/${var.project_id}/secrets/${google_secret_manager_secret.dataform_git_token.secret_id}/versions/latest"
    }
 
    workspace_compilation_overrides {
