@@ -26,8 +26,6 @@ resource "google_project_iam_member" "dataform_bigquery_user" {
   member  = "serviceAccount:${google_service_account.dataform_sa.email}"
 }
 
-
-
 resource "google_project_iam_member" "dataform_token_creator" {
   project = var.project_id
   role    = "roles/iam.serviceAccountTokenCreator"
@@ -52,4 +50,11 @@ resource "google_secret_manager_secret_iam_member" "dataform_default_sa_access" 
   secret_id = google_secret_manager_secret.dataform_git_token.id
   role      = "roles/secretmanager.secretAccessor"
   member    = "serviceAccount:service-${var.project_number}@gcp-sa-dataform.iam.gserviceaccount.com"
+}
+
+resource "google_bigquery_dataset_iam_member" "dataform_sa_dataeditor" {
+  dataset_id = "main"
+  project    = var.project_id
+  role       = "roles/bigquery.dataEditor"
+  member     = "serviceAccount:${google_service_account.dataform_sa.email}"
 }
