@@ -5,6 +5,5 @@ config {
   name: "output",
 }
 
-INSERT INTO `TABLE_ADDRESS`
 SELECT *
 FROM ${ref('input')}

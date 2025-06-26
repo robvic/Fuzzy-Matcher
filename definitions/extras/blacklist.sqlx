@@ -1,5 +1,5 @@
 config {
-  type: "operation",
+  type: "operations",
   database: dataform.projectConfig.defaultDatabase,
   schema: dataform.projectConfig.schemaSuffix,
   name: "blacklist",
