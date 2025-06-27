@@ -60,16 +60,11 @@ resource "google_dataform_repository_workflow_config" "workflow" {
   project        = var.project_id
   region         = var.region
   repository     = google_dataform_repository.dataform_repository.name
-  name           = "my_workflow"
+  name           = "main_workflow"
   release_config = google_dataform_repository_release_config.release_config.id
 
   invocation_config {
-    included_targets {
-      database = var.project_id
-      schema   = "main"
-      name     = "target_1"
-    }
-    included_tags                            = ["tag_1"]
+    included_tags                            = ["experimental"]
     transitive_dependencies_included         = true
     transitive_dependents_included           = true
     fully_refresh_incremental_tables_enabled = false
