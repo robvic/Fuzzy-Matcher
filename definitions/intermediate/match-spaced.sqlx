@@ -2,6 +2,6 @@ config {
   type: "table",
   database: dataform.projectConfig.defaultDatabase,
   schema: dataform.projectConfig.defaultSchema,
-  name: "ranked,
+  name: "match-spaced",
   disabled: true
 }
