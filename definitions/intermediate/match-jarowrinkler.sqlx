@@ -3,5 +3,5 @@ config {
   database: dataform.projectConfig.defaultDatabase,
   schema: dataform.projectConfig.defaultSchema,
   name: "match-jarowrinkler",
-  disabled: true
+  disabled: true,
 }

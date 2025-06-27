@@ -2,17 +2,17 @@ config {
   type: "table",
   database: dataform.projectConfig.defaultDatabase,
   schema: dataform.projectConfig.schemaSuffix,
-  name: "match-exact"
+  name: "match-exact",
 }
 
 WITH origem_1 AS (
   SELECT *
-  FROM ${ref('preprocessed')}
+  FROM ${ref("preprocessed")}
   WHERE origem = ${constants.origens.1}
 ),
 origem_2 AS (
   SELECT *
-  FROM ${ref('preprocessed')}
+  FROM ${ref("preprocessed")}
   WHERE origem = ${constants.origens.2}
 )
 SELECT

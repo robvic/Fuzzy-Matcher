@@ -6,4 +6,4 @@ config {
 }
 
 SELECT *
-FROM ${ref('match-exact')}
+FROM ${ref("match-exact")}

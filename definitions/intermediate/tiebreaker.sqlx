@@ -3,5 +3,5 @@ config {
   database: dataform.projectConfig.defaultDatabase,
   schema: dataform.projectConfig.defaultSchema,
   name: "tiebreak,
-  disabled: true
+  disabled: true,
 }

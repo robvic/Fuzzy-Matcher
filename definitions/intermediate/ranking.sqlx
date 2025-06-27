@@ -3,5 +3,5 @@ config {
   database: dataform.projectConfig.defaultDatabase,
   schema: dataform.projectConfig.defaultSchema,
   name: "ranked,
-  disabled: true
+  disabled: true,
 }

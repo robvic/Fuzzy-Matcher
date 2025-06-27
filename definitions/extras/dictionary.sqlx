@@ -3,5 +3,5 @@ config {
   database: dataform.projectConfig.defaultDatabase,
   schema: "aux",
   name: "dictionary",
-  disabled: true
+  disabled: true,
 }

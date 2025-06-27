@@ -3,5 +3,5 @@ config {
   database: dataform.projectConfig.defaultDatabase,
   schema: dataform.projectConfig.defaultSchema,
   name: "match-spaced",
-  disabled: true
+  disabled: true,
 }
