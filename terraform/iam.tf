@@ -52,9 +52,14 @@ resource "google_secret_manager_secret_iam_member" "dataform_default_sa_access" 
   member    = "serviceAccount:service-${var.project_number}@gcp-sa-dataform.iam.gserviceaccount.com"
 }
 
-resource "google_bigquery_dataset_iam_member" "dataform_sa_dataeditor" {
-  dataset_id = "main"
-  project    = var.project_id
-  role       = "roles/bigquery.dataEditor"
-  member     = "serviceAccount:${google_service_account.dataform_sa.email}"
+resource "google_project_iam_member" "dataform_sa_dataeditor" {
+  project = var.project_id
+  role    = "roles/bigquery.dataEditor"
+  member  = "serviceAccount:${google_service_account.dataform_sa.email}" 
+}
+
+resource "google_project_iam_member" "dataform_sa_object_get" {
+  project = var.project_id
+  role    = "roles/storage.objectViewer"
+  member  = "serviceAccount:${google_service_account.dataform_sa.email}" 
 }

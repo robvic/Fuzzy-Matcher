@@ -9,3 +9,6 @@ terraform/*.tfstate
 terraform/*.tfstate.backup
 terraform/.terraform/
 terraform/.terraform.lock.hcl
+
+# Arquivos de configuração do VS Code
+.DS_Store

@@ -1,0 +1,11 @@
+config {
+  type: "table",
+  database: dataform.projectConfig.defaultDatabase,
+  schema: dataform.projectConfig.schemaSuffix,
+  name: "claned",
+}
+
+SELECT
+    RTRIM(LOWER(TRIM(cliente)),"000") AS cliente,
+    origem
+FROM ${ref("input")}
