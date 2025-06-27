@@ -3,6 +3,7 @@ config {
   database: dataform.projectConfig.defaultDatabase,
   schema: dataform.projectConfig.schemaSuffix,
   name: "preprocessed",
+  dependencies: "blacklist"
 }
 
 WITH blacklist_regex AS (

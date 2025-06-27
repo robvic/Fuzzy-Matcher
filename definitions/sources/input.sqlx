@@ -3,6 +3,7 @@ config {
   database: dataform.projectConfig.defaultDatabase,
   schema: dataform.projectConfig.schemaSuffix,
   name: "input",
+  dependencies: "load"
 }
 
 SELECT DISTINCT cliente, origem
