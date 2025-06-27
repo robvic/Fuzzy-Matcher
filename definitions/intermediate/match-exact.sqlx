@@ -20,5 +20,5 @@ SELECT
   o2.cliente AS cliente_2,
   1.0 AS score
 FROM origem_1 AS o1
-LEFT JOIN origem_2 AS o2
+INNER JOIN origem_2 AS o2
 ON o1.cliente = o2.cliente
