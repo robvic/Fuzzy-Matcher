@@ -1,0 +1,14 @@
+config {
+  type: "table",
+  database: dataform.projectConfig.defaultDatabase,
+  schema: "aux",
+  name: "tfidf",
+}
+
+WITH words AS (
+  SELECT word
+  FROM ${ref("preprocessed")},
+  UNNEST(SPLIT(cliente, ' ')) AS word
+)
+SELECT TF_IDF(ARRAY(SELECT word FROM words)) OVER()
+FROM words

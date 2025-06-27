@@ -7,7 +7,7 @@ config {
 
 WITH words AS (
   SELECT word
-  FROM ${ref("input")},
+  FROM ${ref("preprocessed")},
   UNNEST(SPLIT(cliente, ' ')) AS word
 )
 SELECT BAG_OF_WORDS(ARRAY(SELECT word FROM words))
