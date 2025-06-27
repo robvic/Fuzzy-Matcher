@@ -1,0 +1,13 @@
+config {
+  type: "table",
+  database: dataform.projectConfig.defaultDatabase,
+  schema: "aux",
+  name: "bow",
+}
+
+WITH words AS (
+  SELECT word
+  FROM ${ref("input")},
+  UNNEST(SPLIT(cliente, ' ')) AS word
+)
+SELECT BAG_OF_WORDS(ARRAY(SELECT word FROM words))
