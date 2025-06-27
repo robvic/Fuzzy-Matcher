@@ -1,7 +1,0 @@
-config {
-  type: "table",
-  database: dataform.projectConfig.defaultDatabase,
-  schema: dataform.projectConfig.defaultSchema,
-  name: "match-norm-singular",
-  disabled: true,
-}
