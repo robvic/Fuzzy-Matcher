@@ -1,0 +1,7 @@
+config {
+  type: "table",
+  database: dataform.projectConfig.defaultDatabase,
+  schema: dataform.projectConfig.schemaSuffix,
+  name: "dictionary",
+  disabled: true
+}
