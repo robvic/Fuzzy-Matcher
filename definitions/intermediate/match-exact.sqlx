@@ -8,12 +8,12 @@ config {
 WITH origem_1 AS (
   SELECT *
   FROM ${ref("preprocessed")}
-  WHERE origem = "siscom"
+  WHERE origem = "${constants.origem_1}"
 ),
 origem_2 AS (
   SELECT *
   FROM ${ref("preprocessed")}
-  WHERE origem = "kantar"
+  WHERE origem = "${constants.origem_2}"
 )
 SELECT
   o1.cliente AS cliente_1,
