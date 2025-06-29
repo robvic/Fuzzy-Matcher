@@ -6,5 +6,9 @@ config {
   dependencies: "load"
 }
 
-SELECT DISTINCT cliente, origem
+SELECT
+  ROW_NUMBER() OVER () AS id,
+  cliente, 
+  origem
 FROM main.load
+GROUP BY cliente, origem

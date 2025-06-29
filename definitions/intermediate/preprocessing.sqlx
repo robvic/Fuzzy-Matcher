@@ -7,12 +7,12 @@ config {
 }
 
 WITH blacklist_regex AS (
-    SELECT
-      r'\b(' || STRING_AGG(REGEXP_REPLACE(TO_JSON_STRING(term), r'^"|"$', ''), '|') || r')\b' AS pattern
-    FROM aux.blacklist
+  SELECT
+    r'\b(' || STRING_AGG(REGEXP_REPLACE(TO_JSON_STRING(term), r'^"|"$', ''), '|') || r')\b' AS pattern
+  FROM aux.blacklist
   )
 SELECT DISTINCT
-    TRIM(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(cliente, pattern, ''), r'\s+', ' '), r'\(\s*\)', ''), r'\.', '')) AS cliente,
-    origem
-FROM ${ref("cleaned")},
-    blacklist_regex
+  id,
+  TRIM(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(cliente, pattern, ''), r'\s+', ' '), r'\(\s*\)', ''), r'\.', '')) AS cliente,
+  origem
+FROM ${ref("cleaned")}, blacklist_regex

@@ -16,6 +16,7 @@ origem_2 AS (
   WHERE origem = "${constants.origem_2}"
 )
 SELECT
+  o1.id,
   o1.cliente AS cliente_1,
   o2.cliente AS cliente_2,
   1.0 AS score

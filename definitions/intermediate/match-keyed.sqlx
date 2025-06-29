@@ -5,3 +5,29 @@ config {
   name: "match-keyed",
   disabled: true
 }
+
+WITH input_keyed AS (
+  SELECT 
+    tb1.*, 
+    REGEXP_REPLACE(tb2.cnpj, r"[-.]", "") AS cnpj
+  FROM ${ref("preprocessed")} AS tb1
+  LEFT JOIN load AS tb2
+),
+origem_1 AS (
+  SELECT *
+  FROM input_keyed
+  WHERE origem = "${constants.origem_1}"
+),
+origem_2 AS (
+  SELECT *
+  FROM input_keyed
+  WHERE origem = "${constants.origem_2}"
+)
+SELECT
+  o1.id,
+  o1.cliente AS cliente_1,
+  o2.cliente AS cliente_2,
+  1.0 AS score
+FROM origem_1 AS o1
+INNER JOIN origem_2 AS o2
+ON o1.cnpj = o2.cnpj
