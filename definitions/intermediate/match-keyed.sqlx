@@ -3,7 +3,6 @@ config {
   database: dataform.projectConfig.defaultDatabase,
   schema: dataform.projectConfig.schemaSuffix,
   name: "match-keyed",
-  disabled: true
 }
 
 WITH input_keyed AS (

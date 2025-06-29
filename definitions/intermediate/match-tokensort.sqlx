@@ -2,6 +2,54 @@ config {
   type: "table",
   database: dataform.projectConfig.defaultDatabase,
   schema: dataform.projectConfig.schemaSuffix,
-  name: "match-tokensort",
-  disabled: true
+  name: "match-tokensort"
 }
+
+WITH base AS (
+  SELECT
+    cliente,
+    origem,
+    SPLIT(cliente, " ") AS words
+  FROM ${ref("preprocessed")}
+  WHERE LENGTH(cliente) >= 5 AND ARRAY_LENGTH(SPLIT(cliente, " ")) >= 2
+),
+tokenized AS (
+  SELECT
+    cliente,
+    origem,
+    ARRAY(
+      SELECT REGEXP_REPLACE(word, r'[a-z]?$|s$', '')
+      FROM UNNEST(words) AS word
+      WHERE LENGTH(word) >= 3
+    ) AS tokens
+  FROM base
+),
+cross_joined AS (
+  SELECT 
+    i.cliente AS cliente_1,
+    e.cliente AS cliente_2,
+    i.tokens AS token_1,
+    e.tokens AS token_2,
+    ARRAY(
+      SELECT word FROM UNNEST(i.tokens) AS word
+      WHERE word IN UNNEST(e.tokens)
+    ) AS token_match
+  FROM (SELECT * FROM tokenized WHERE origem = "${constants.origem_1}") i
+  CROSS JOIN (SELECT * FROM tokenized WHERE origem = "${constants.origem_2}") e
+  ),
+matched AS (
+  SELECT 
+    cliente_1,
+    cliente_2,
+    token_match,
+    ARRAY_LENGTH(token_match) AS match_count,
+    ARRAY_LENGTH(token_1) AS count_1,
+    ARRAY_LENGTH(token_2) AS count_2
+  FROM cross_joined
+)
+SELECT 
+  cliente_1,
+  cliente_2,
+  (match_count)/((count_1+count_2)/2) AS score
+FROM matched
+WHERE match_count >= 3
