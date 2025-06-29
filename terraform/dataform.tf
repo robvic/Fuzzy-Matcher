@@ -64,7 +64,6 @@ resource "google_dataform_repository_workflow_config" "workflow" {
   release_config = google_dataform_repository_release_config.release_config.id
 
   invocation_config {
-    included_tags                            = ["experimental"]
     transitive_dependencies_included         = true
     transitive_dependents_included           = true
     fully_refresh_incremental_tables_enabled = false
