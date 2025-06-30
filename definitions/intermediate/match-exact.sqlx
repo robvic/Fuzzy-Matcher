@@ -16,10 +16,12 @@ origem_2 AS (
   WHERE origem = "${constants.origem_2}"
 )
 SELECT
-  o1.id,
-  o1.cliente AS cliente_1,
-  o2.cliente AS cliente_2,
-  1.0 AS score
-FROM origem_1 AS o1
-INNER JOIN origem_2 AS o2
-ON o1.cliente = o2.cliente
+  tb1.id AS id_1,
+  tb2.id AS id_2,
+  tb1.cliente AS cliente_1,
+  tb2.cliente AS cliente_2,
+  1.0 AS score,
+  "exact" AS match_type
+FROM origem_1 AS tb1
+INNER JOIN origem_2 AS tb2
+ON tb1.cliente = tb2.cliente

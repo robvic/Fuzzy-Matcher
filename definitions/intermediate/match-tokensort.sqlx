@@ -7,6 +7,7 @@ config {
 
 WITH base AS (
   SELECT
+    id,
     cliente,
     origem,
     SPLIT(cliente, " ") AS words
@@ -15,6 +16,7 @@ WITH base AS (
 ),
 tokenized AS (
   SELECT
+    id,
     cliente,
     origem,
     ARRAY(
@@ -25,7 +27,9 @@ tokenized AS (
   FROM base
 ),
 cross_joined AS (
-  SELECT 
+  SELECT
+    i.id AS id_1,
+    e.id AS id_2,
     i.cliente AS cliente_1,
     e.cliente AS cliente_2,
     i.tokens AS token_1,
@@ -38,7 +42,9 @@ cross_joined AS (
   CROSS JOIN (SELECT * FROM tokenized WHERE origem = "${constants.origem_2}") e
   ),
 matched AS (
-  SELECT 
+  SELECT
+    id_1,
+    id_2,
     cliente_1,
     cliente_2,
     token_match,
@@ -47,9 +53,12 @@ matched AS (
     ARRAY_LENGTH(token_2) AS count_2
   FROM cross_joined
 )
-SELECT 
+SELECT
+  id_1,
+  id_2,
   cliente_1,
   cliente_2,
-  (match_count)/((count_1+count_2)/2) AS score
+  (match_count)/((count_1+count_2)/2) AS score,
+  "token sort" AS match_type
 FROM matched
 WHERE match_count >= 3

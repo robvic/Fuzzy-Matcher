@@ -5,3 +5,10 @@ config {
   name: "match-tiebreak",
   disabled: true
 }
+
+SELECT DISTINCT tb1.*, tb2.setor
+FROM ${ref("grouped")} AS tb1
+LEFT JOIN main.load AS tb2
+ON tb1.id = tb2.id
+WHERE score >= 0.9
+AND ((match_type = "levenshtein" AND tb1.setor = tb2.setor AND score < 1.0) OR match_type != "levenshtein")

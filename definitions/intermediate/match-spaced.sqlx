@@ -6,9 +6,12 @@ config {
 }
 
 SELECT DISTINCT
+  tb1.id AS id_1,
+  tb2.id AS id_2,
   tb1.cliente AS cliente_1,
   tb2.cliente AS cliente_2,
-  0.98 AS score
+  0.98 AS score,
+  "spaced" AS match_type
 FROM ${ref("preprocessed")} AS tb1
 JOIN ${ref("preprocessed")} AS tb2
 ON REPLACE(tb1.cliente, " ", "") = REPLACE(tb2.cliente, " ", "") AND tb1.origem != tb2.origem
