@@ -10,7 +10,7 @@ WITH input_keyed AS (
     tb1.*, 
     REGEXP_REPLACE(tb2.cnpj, r"[-.]", "") AS cnpj
   FROM ${ref("preprocessed")} AS tb1
-  LEFT JOIN load AS tb2
+  LEFT JOIN main.load AS tb2
 ),
 origem_1 AS (
   SELECT *
