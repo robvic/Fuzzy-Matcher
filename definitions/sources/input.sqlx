@@ -9,6 +9,8 @@ config {
 SELECT
   ROW_NUMBER() OVER () AS id,
   cliente, 
-  origem
+  origem,
+  cnpj,
+  setor
 FROM main.load
-GROUP BY cliente, origem
+GROUP BY cliente, origem, cnpj, setor

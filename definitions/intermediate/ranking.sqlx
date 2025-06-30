@@ -6,10 +6,10 @@ config {
 }
 
 SELECT DISTINCT tb1.cliente_1, tb1.cliente_2, tb1.score, tb1.match_type
-FROM ${ref("match-tiebreak")} AS tb1
+FROM ${ref("grouped")} AS tb1
 INNER JOIN (
   SELECT cliente_1, cliente_2, MAX(score) AS max_score
-  FROM ${ref("match-tiebreak")}
+  FROM ${ref("grouped")}
   GROUP BY cliente_1, cliente_2
 ) AS tb2
 ON tb1.cliente_1 = tb2.cliente_1

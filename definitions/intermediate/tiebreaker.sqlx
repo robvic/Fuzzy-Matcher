@@ -3,11 +3,12 @@ config {
   database: dataform.projectConfig.defaultDatabase,
   schema: dataform.projectConfig.schemaSuffix,
   name: "match-tiebreak",
+  disabled: true
 }
 
-SELECT DISTINCT tb1.*, tb2.setor
+SELECT DISTINCT tb1.*, tb2.setor, tb3.setor
 FROM ${ref("grouped")} AS tb1
-LEFT JOIN main.load AS tb2
-ON tb1.id = tb2.id
+LEFT JOIN ${ref("input")} AS tb2 ON tb1.id_1 = tb2.id
+LEFT JOIN ${ref("input")} AS tb3 ON tb1.id_2 = tb3.id
 WHERE score >= 0.9
-AND ((match_type = "levenshtein" AND tb1.setor = tb2.setor AND score < 1.0) OR match_type != "levenshtein")
+AND ((match_type = "levenshtein" AND tb2.setor = tb3.setor AND score < 1.0) OR match_type != "levenshtein")

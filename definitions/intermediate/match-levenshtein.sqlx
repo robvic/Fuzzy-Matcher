@@ -3,6 +3,7 @@ config {
   database: dataform.projectConfig.defaultDatabase,
   schema: dataform.projectConfig.schemaSuffix,
   name: "match-levenshtein",
+  disabled: true
 }
 
 SELECT DISTINCT
