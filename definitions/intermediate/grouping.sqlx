@@ -11,9 +11,6 @@ FROM (
     FROM ${ref("match-exact")}
     UNION ALL
     SELECT *
-    FROM ${ref("match-levenshtein")}
-    UNION ALL
-    SELECT *
     FROM ${ref("match-keyed")}
     UNION ALL
     SELECT *
