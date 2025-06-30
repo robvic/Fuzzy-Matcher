@@ -3,5 +3,12 @@ config {
   database: dataform.projectConfig.defaultDatabase,
   schema: dataform.projectConfig.schemaSuffix,
   name: "match-levenshtein",
-  disabled: true
 }
+
+SELECT DISTINCT
+  tb1.cliente AS cliente_1,
+  tb2.cliente AS cliente_2,
+  SAFE_DIVIDE(LENGTH(tb1.cliente) - EDIT_DISTANCE(tb1.cliente, tb2.cliente),LENGTH(tb1.cliente)) AS score
+FROM ${ref("preprocessed")} AS tb1
+JOIN ${ref("preprocessed")} AS tb2
+ON tb1.origem != tb2.origem AND LENGTH(tb1.cliente) > 3 AND LENGTH(tb2.cliente) > 3 AND EDIT_DISTANCE(tb1.cliente, tb2.cliente) <= 3
