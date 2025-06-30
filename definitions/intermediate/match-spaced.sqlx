@@ -3,5 +3,12 @@ config {
   database: dataform.projectConfig.defaultDatabase,
   schema: dataform.projectConfig.schemaSuffix,
   name: "match-spaced",
-  disabled: true
 }
+
+SELECT DISTINCT
+  tb1.cliente AS cliente_1,
+  tb2.cliente AS cliente_2,
+  0.98 AS score
+FROM ${ref("preprocessed")} AS tb1
+JOIN ${ref("preprocessed")} AS tb2
+ON REPLACE(tb1.cliente, " ", "") = REPLACE(tb2.cliente, " ", "") AND tb1.origem != tb2.origem
