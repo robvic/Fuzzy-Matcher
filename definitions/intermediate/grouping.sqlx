@@ -1,0 +1,27 @@
+config {
+  type: "table",
+  database: dataform.projectConfig.defaultDatabase,
+  schema: dataform.projectConfig.schemaSuffix,
+  name: "grouped",
+}
+
+SELECT DISTINCT *
+FROM (
+    SELECT *
+    FROM ${ref("match-exact")}
+    UNION ALL
+    SELECT *
+    FROM ${ref("match-levenshtein")}
+    UNION ALL
+    SELECT *
+    FROM ${ref("match-keyed")}
+    UNION ALL
+    SELECT *
+    FROM ${ref("match-norm-singular")}
+    UNION ALL
+    SELECT *
+    FROM ${ref("match-spaced")}
+    UNION ALL
+    SELECT *
+    FROM ${ref("match-tokensort")}
+)
