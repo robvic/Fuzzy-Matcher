@@ -3,6 +3,7 @@ config {
   database: dataform.projectConfig.defaultDatabase,
   schema: "aux",
   name: "tfidf",
+  disabled: true
 }
 
 WITH words AS (

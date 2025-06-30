@@ -3,6 +3,7 @@ config {
   database: dataform.projectConfig.defaultDatabase,
   schema: "aux",
   name: "bow",
+  disabled: true
 }
 
 WITH words AS (
