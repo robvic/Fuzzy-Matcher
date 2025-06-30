@@ -8,7 +8,7 @@ config {
 WITH input_keyed AS (
   SELECT 
     tb1.*, 
-    REGEXP_REPLACE(tb2.cnpj, r"[-.]", "") AS cnpj
+    REGEXP_REPLACE(tb2.cnpj, r"[-./ ]", "") AS cnpj
   FROM ${ref("preprocessed")} AS tb1
   LEFT JOIN ${ref("input")} AS tb2
   ON tb1.id = tb2.id
