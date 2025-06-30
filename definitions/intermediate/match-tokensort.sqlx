@@ -12,7 +12,7 @@ WITH base AS (
     origem,
     SPLIT(cliente, " ") AS words
   FROM ${ref("preprocessed")}
-  WHERE LENGTH(cliente) >= 5 AND ARRAY_LENGTH(SPLIT(cliente, " ")) >= 2
+  WHERE ARRAY_LENGTH(SPLIT(cliente, " ")) >= 2
 ),
 tokenized AS (
   SELECT
@@ -61,5 +61,5 @@ SELECT
   (match_count)/((count_1+count_2)/2) AS score,
   "token sort" AS match_type
 FROM matched
-WHERE match_count >= 3
+WHERE match_count >= 2
 QUALIFY COUNT(*) OVER (PARTITION BY cliente_1) = 1
