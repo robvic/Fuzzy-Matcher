@@ -62,3 +62,4 @@ SELECT
   "token sort" AS match_type
 FROM matched
 WHERE match_count >= 3
+QUALIFY COUNT(*) OVER (PARTITION BY cliente_1) = 1
