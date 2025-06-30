@@ -3,5 +3,34 @@ config {
   database: dataform.projectConfig.defaultDatabase,
   schema: dataform.projectConfig.schemaSuffix,
   name: "match-norm-singular",
-  disabled: true
 }
+
+WITH base AS (
+  SELECT
+    cliente,
+    origem,
+    SPLIT(cliente, " ") AS words
+  FROM ${ref("preprocessed")}
+),
+normalized AS (
+  SELECT
+    cliente,
+    origem,
+    ARRAY_TO_STRING(ARRAY(
+      SELECT IF(LENGTH(word) >= 3, REGEXP_REPLACE(word, r's(\s|$|[.,;!?])', ''), "NOTCONV")
+      FROM UNNEST(words) AS word
+    ),"","") AS cliente_normalized
+  FROM base
+),
+filtered AS (
+  SELECT *
+  FROM normalized
+  WHERE cliente_normalized NOT LIKE "%NOTCONV%"
+)
+SELECT DISTINCT
+  tb1.cliente AS cliente_1,
+  tb2.cliente AS cliente_2,
+  0.95 AS score
+FROM filtered AS tb1
+JOIN filtered AS tb2
+ON tb1.cliente_normalized = tb2.cliente_normalized AND tb1.origem != tb2.origem
