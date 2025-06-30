@@ -3,7 +3,6 @@ config {
   database: dataform.projectConfig.defaultDatabase,
   schema: dataform.projectConfig.schemaSuffix,
   name: "match-tiebreak",
-  disabled: true
 }
 
 SELECT DISTINCT tb1.*, tb2.setor
