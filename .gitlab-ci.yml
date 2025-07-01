@@ -1,0 +1,4 @@
+include:
+  - project: $GITLABCI_JOBS_REPOSITORY
+    ref: $JOB_TAG
+    file: base.gitlab-ci.yaml
